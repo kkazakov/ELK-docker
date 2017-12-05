@@ -6,11 +6,9 @@ RUN apk --no-cache add python py-setuptools py-pip && \
     pip install requests-aws4auth && \
     apk del py-pip
 
-USER nobody:nobody
-
 # add tasks scripts
 ADD ./tasks /etc/periodic/daily
 RUN chmod a+x /etc/periodic/daily/*
 
-ENTRYPOINT ["/usr/bin/curator"]
+CMD ["crond", "-f", "-l", "8"]
 
